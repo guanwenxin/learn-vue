@@ -6,12 +6,14 @@
         loop></video>
     </div>
     <div class="container">
+      <!-- <ChildComp></ChildComp> -->
       <div class="desc"></div>
       <div class="login">
         <div class="login-wrapper">
+          <child-comp @update-info="updateInfo" v-if="isShowChild" :info="pInfo" @send-data="getDataFromChild"></child-comp>
           <el-form :model="form" label-width="80px">
             <el-form-item label="用户名：">
-              <el-input v-model="form.name"></el-input>
+              <el-input v-model="form.name" @input="getUserName"></el-input>
             </el-form-item>
             <el-form-item label="密码：">
               <el-input v-model="form.passwd" show-password></el-input>
@@ -27,7 +29,13 @@
 </template>
 
 <script>
+// 引入
+import ChildComp from './components/ChildComp.vue';
 export default {
+  // components
+  components: {
+    ChildComp,
+  },
   // 预定义属性
   name: 'App',
   // 组件当中所有的响应式数据
@@ -35,12 +43,24 @@ export default {
     return {
       form: {
         name: '',
-        passwd: ''
+        passwd: '',
       },
+      isShowChild: true,
+      pInfo: '这是用来设置默认的input框的值'
     }
   },
   // 方法
   methods: {
+    getUserName(value) {
+      console.log(value)
+    },
+    getDataFromChild(data) {
+      console.log('从子级组件获取的数据', data)
+    },
+    updateInfo(v) {
+      console.log(v, 'v')
+      this.pInfo = v
+    },
     createHelloMsg() {
       console.log(this.info)
     },
@@ -68,11 +88,17 @@ export default {
   },
   // 生命周期函数之一
   mounted() {
-    // 当 当前组件 被挂载时，触发执行，只执行一次
+    // 当 当前组件 被挂载时，出发执行
     setTimeout(() => {
-      this.isShow = false,
-        this.isHighLight = true
+      this.isShow = false;
+      this.isHighLight = true;
     }, 3000)
+    // setInterval(() => {
+    //   this.isShowChild = !this.isShowChild;
+    // }, 3000)
+    setTimeout(() => {
+      this.pInfo = '我的值变化了'
+    }, 5000)
   },
 }
 </script>
@@ -86,6 +112,7 @@ html,
 body {
   margin: 0;
   padding: 0;
+  overflow-y: hidden;
 }
 .container {
   display: flex;

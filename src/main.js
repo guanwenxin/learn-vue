@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import BallP from './components/BallP.vue'
+import MainComp from './components/MainComp.vue'
 
 // 引入elementui
 import ElementUI from 'element-ui';
@@ -12,13 +13,21 @@ Vue.use(ElementUI);
 Vue.config.productionTip = false
 
 new Vue({
-  render: h => h(BallP),
-  // render: h => h(App),
+  render: h => h(App),
 }).$mount('#app')
 
+new Vue({
+  render: h => h(BallP),
+}).$mount('#ball')
+
+new Vue({
+  render: h => h(MainComp),
+}).$mount('#main')
 
 
-/* <div :id="idName">
+
+
+{/* <div :id="idName">
 <!-- 1.v-html -->
 <span v-html="message"></span>
 <!-- <span>{{ msg }}</span> -->
@@ -37,4 +46,4 @@ new Vue({
 <!-- 5.v-model 创建双向绑定-->
 <el-input v-model="info"></el-input>
 <!-- 页面 -->
-</div> */
+</div> */}

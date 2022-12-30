@@ -1,22 +1,25 @@
 <template>
-    <div></div>
+    <div> <ball-c1 :val="val" @val="send" :way="way"></ball-c1>
+    </div>
 </template>
 <script>
+import BallC1 from './BallC1.vue'
 export default {
     name: 'BallC',
-    props: ['ball'],
-    mounted() {
-        // 起点
-        this.$emit('play-ball', this.ball + 1)
+    components: {
+        BallC1,
     },
-    watch: {
-        ball: function(newVale) {
-            // 减速
-            console.log('BallC减速一下，三秒后再次踢球')
-            console.log('父级提给我的是', newVale)
-            setTimeout(() => {
-                this.$emit('play-ball', newVale + 1)
-            }, 3000)
+    props: ['ball', 'val', 'way'],
+    mounted() {
+        this.ball.name = 'hello'
+        console.log(this.ball)
+        // 起点
+        // this.$emit('play-ball', this.ball + 1)
+    },
+    methods: {
+        send(val) {
+            console.log('c组件触发了')
+            this.$emit('val', val)
         }
     }
 }
